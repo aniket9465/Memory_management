@@ -40,57 +40,37 @@ int main()
 		fin>>number_of_pages_in_secondary_memory;
 		fin>>number_of_entries;
 		int number_of_page_fault = 0;
-		int aging_register[number_of_pages_in_primary_memory+1][number_of_pages_in_primary_memory+1]={};
-		int page_number[number_of_pages_in_primary_memory+1]={};
-		for(int i=0;i<number_of_entries;++i)
+		vector<int> stack;
+		for(int i=1;i<=number_of_entries;++i)
 		{
 			int page;
 			fin>>page;
-			int fl=0,po=0;
-			for(int k=1;k<=number_of_pages_in_primary_memory;++k)
-			{
-				if(page_number[k]==page)
-				{
+			int fl=0;
+			for(auto r:stack)
+				if(r==page)
 					fl=1;
-					po=k;
-					break;
-				}
-			}
 			if(fl==1) // page found 
 			{
-				for(int k=1;k<=number_of_pages_in_primary_memory;++k)
-					for(int l=number_of_pages_in_primary_memory;l>=1;--l)
-						aging_register[k][l]=aging_register[k][l-1];
-				aging_register[po][1]=1;
+				vector<int> temp;
+				temp.push_back(page);
+				for(int k=0;k<stack.size();++k)
+				{
+					if(stack[k]!=page)
+						temp.push_back(stack[k]);
+				}
+				stack=temp;
 				continue;
 			}
-			// page fault
+
+			//page fault
 			++number_of_page_fault;
-			//generated delay 
-			int delay=10000;
-			while(delay)
+			vector<int> temp;
+			temp.push_back(page);
+			for(int k=0;k<min(number_of_pages_in_primary_memory-1,(int)stack.size());++k)
 			{
-				--delay;
+				temp.push_back(stack[k]);
 			}
-			po=0;
-			long long v=INT_MAX*16ll;
-			for(int l=1;l<=number_of_pages_in_primary_memory;++l){
-				long long val=0;
-				for(int k=1;k<=number_of_pages_in_primary_memory;++k)
-				{
-					if(aging_register[l][k]==1)
-						val+=(1ll<<(number_of_pages_in_primary_memory-k));
-				}
-				if(v>val){
-					v=val;
-					po=l;
-				}
-			}
-			for(int k=1;k<=number_of_pages_in_primary_memory;++k)
-				for(int l=number_of_pages_in_primary_memory;l>=1;--l)
-					aging_register[k][l]=aging_register[k][l-1];
-			page_number[po]=page;
-			aging_register[po][1]=1;
+			stack=temp;
 		}
 		fin.close();
 		auto stop = chrono::high_resolution_clock::now();
