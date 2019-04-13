@@ -64,6 +64,12 @@ int main()
 
 			//page fault
 			++number_of_page_fault;
+			//generated delay 
+			int delay=1000;
+			while(delay)
+			{
+				--delay;
+			}
 			vector<int> temp;
 			temp.push_back(page);
 			for(int k=0;k<min(number_of_pages_in_primary_memory-1,(int)stack.size());++k)

@@ -63,7 +63,7 @@ int main()
 			// page fault
 			++number_of_page_fault;
 			//generated delay 
-			int delay=10000;
+			int delay=1000;
 			while(delay)
 			{
 				--delay;
