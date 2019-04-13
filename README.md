@@ -41,3 +41,12 @@ The graphs are added in the [`Graphs`](Graphs) directory. They are made using ma
 
 ## Report 
 The report file (pdf) is added [here]()
+
+## Group Members
+- Aniket Goyal (17114011)
+- Bhavye Jain (17114020)
+- Kaustubh Trivedi (17114044)
+- Roodram Paneri (17114066)
+- Saurabh Singh (17114068)
+- Twarit Waiker (17114074)
+- Shivansh Bindal (17115088)
